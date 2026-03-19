@@ -17,20 +17,31 @@ const renderer = new THREE.WebGLRenderer({ antialias: true });
 renderer.setSize(window.innerWidth, window.innerHeight);
 document.body.appendChild(renderer.domElement);
 
-// Geometría (Icosaedros)
+// Geometría
 const geometry = new THREE.IcosahedronGeometry(1, 0);
 
-// Materiales (colores nuevos)
-const materialGreen = new THREE.MeshStandardMaterial({ color: 0x00ffff }); // Cian
-const materialBlue  = new THREE.MeshStandardMaterial({ color: 0x8a2be2 }); // Morado
-const materialRed   = new THREE.MeshStandardMaterial({ color: 0xff8c00 }); // Naranja
+// Materiales (colores mejorados)
+const materialGreen = new THREE.MeshStandardMaterial({ 
+  color: 0x00ffff,
+  emissive: 0x003333
+});
+
+const materialBlue  = new THREE.MeshStandardMaterial({ 
+  color: 0x8a2be2,
+  emissive: 0x220044
+});
+
+const materialRed   = new THREE.MeshStandardMaterial({ 
+  color: 0xff8c00,
+  emissive: 0x331a00
+});
 
 // Meshes
 const icoGreen = new THREE.Mesh(geometry, materialGreen);
 const icoBlue  = new THREE.Mesh(geometry, materialBlue);
 const icoRed   = new THREE.Mesh(geometry, materialRed);
 
-// Posiciones (como en tu imagen)
+// Posiciones
 icoGreen.position.x = -2.5;
 icoBlue.position.x  = 0;
 icoRed.position.x   = 2.5;
@@ -38,14 +49,11 @@ icoRed.position.x   = 2.5;
 // Agregar a escena
 scene.add(icoGreen, icoBlue, icoRed);
 
-// Luz frontal (clave para que se vea como quieres)
+// Luces
 const light = new THREE.DirectionalLight(0xffffff, 1.5);
-
-// Desde la cámara (frente)
 light.position.set(0, 0, 5);
 scene.add(light);
 
-// Luz ambiental suave (evita negro total)
 const ambient = new THREE.AmbientLight(0xffffff, 0.3);
 scene.add(ambient);
 
@@ -53,7 +61,6 @@ scene.add(ambient);
 function animate() {
   requestAnimationFrame(animate);
 
-  // Velocidades diferentes
   icoGreen.rotation.x += 0.005;
   icoGreen.rotation.y += 0.005;
 
@@ -68,7 +75,7 @@ function animate() {
 
 animate();
 
-// Ajuste de pantalla
+// Responsive
 window.addEventListener('resize', () => {
   const w = window.innerWidth;
   const h = window.innerHeight;
